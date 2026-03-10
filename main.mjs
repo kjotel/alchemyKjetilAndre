@@ -50,6 +50,13 @@ async function submitAnswer(answer) {
     }),
   });
 
+  const data = await response.json();
+
+  console.log("Submit result:", data);
+
+  return data;
+}
+
 async function getClue() {
   const response = await fetch(`${BASE_URL}/clue`, {
     method: "GET",
@@ -66,13 +73,6 @@ async function getClue() {
   return data.clue;
 }
 
-  const data = await response.json();
-
-  console.log("Submit result:", data);
-
-  return data;
-}
-
 function solveChallenge(prompt) {
   if (prompt.includes("2+2")) {
     return "4";
@@ -80,25 +80,6 @@ function solveChallenge(prompt) {
 
   if (prompt.includes("3.14159")) {
     return "pi";
-  }
-
-  if (prompt.includes("☉")) {
-    const symbols = "☉☿☽♂☉";
-
-    const map = {
-      "☉": "S",
-      "☿": "M",
-      "☽": "M",
-      "♂": "M",
-    };
-
-    let answer = "";
-
-    for (let symbol of symbols) {
-      answer += map[symbol];
-    }
-
-    return answer;
   }
 }
 
@@ -113,6 +94,12 @@ async function main() {
     console.log("Challenge:", challenge.prompt);
 
     const answer = solveChallenge(challenge.prompt);
+
+    if (!answer) {
+      console.log("No solution yet. Requesting clue...");
+      await getClue();
+      return;
+    }
 
     console.log("Answer:", answer);
 
