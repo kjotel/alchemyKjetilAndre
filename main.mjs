@@ -34,7 +34,7 @@ async function getStatus() {
 
   const data = await response.json();
 
-  console.log(data);
+  return data;
 }
 
 async function submitAnswer(answer) {
@@ -57,7 +57,10 @@ async function submitAnswer(answer) {
 
 async function main() {
   await startGame();
-  await getStatus();
+
+  const challenge = await getStatus();
+
+  console.log("Challenge:", challenge.prompt);
 
   await submitAnswer("4");
 }
