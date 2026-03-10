@@ -74,14 +74,17 @@ async function getClue() {
 }
 
 function solveChallenge(prompt) {
+  // Challenge 1
   if (prompt.includes("2+2")) {
     return "4";
   }
 
+  // Challenge 2
   if (prompt.includes("3.14159")) {
     return "pi";
   }
 
+  // Challenge 3
   if (prompt.includes("☉")) {
     const symbols = "☉☿☽♂☉";
 
@@ -96,6 +99,19 @@ function solveChallenge(prompt) {
 
     for (let symbol of symbols) {
       answer += map[symbol];
+    }
+
+    return answer;
+  }
+
+  // Challenge 4
+  if (prompt.includes("Lethe")) {
+    const poemWords = ["Still", "Icy", "Lethe", "Veiling", "Eldritch", "Rime"];
+
+    let answer = "";
+
+    for (let word of poemWords) {
+      answer += word[0];
     }
 
     return answer;
