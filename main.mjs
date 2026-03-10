@@ -1,5 +1,7 @@
 const BASE_URL = "https://alchemy-kd0l.onrender.com";
 
+let token;
+
 async function startGame() {
   const response = await fetch(`${BASE_URL}/start`, {
     method: "POST",
@@ -15,7 +17,49 @@ async function startGame() {
   });
 
   const data = await response.json();
+
+  token = data.token;
+
+  console.log("Token:", token);
+}
+
+async function getStatus() {
+  const response = await fetch(`${BASE_URL}/status`, {
+    method: "GET",
+    headers: {
+      Authorization: token,
+      Accept: "application/json",
+    },
+  });
+
+  const data = await response.json();
+
   console.log(data);
 }
 
-startGame();
+async function submitAnswer(answer) {
+  const response = await fetch(`${BASE_URL}/submit`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      answer: answer,
+    }),
+  });
+
+  const data = await response.json();
+
+  console.log("Submit result:", data);
+}
+
+async function main() {
+  await startGame();
+  await getStatus();
+
+  await submitAnswer("4");
+}
+
+main();
