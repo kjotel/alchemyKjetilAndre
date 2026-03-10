@@ -55,6 +55,16 @@ async function submitAnswer(answer) {
   console.log("Submit result:", data);
 }
 
+function solveChallenge(prompt) {
+  if (prompt.includes("2+2")) {
+    return "4";
+  }
+
+  if (prompt.includes("3.14159")) {
+    return "pi";
+  }
+}
+
 async function main() {
   await startGame();
 
@@ -62,7 +72,11 @@ async function main() {
 
   console.log("Challenge:", challenge.prompt);
 
-  await submitAnswer("4");
+  const answer = solveChallenge(challenge.prompt);
+
+  console.log("Answer:", answer);
+
+  await submitAnswer(answer);
 }
 
 main();
