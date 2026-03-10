@@ -81,6 +81,25 @@ function solveChallenge(prompt) {
   if (prompt.includes("3.14159")) {
     return "pi";
   }
+
+  if (prompt.includes("☉")) {
+    const symbols = "☉☿☽♂☉";
+
+    const map = {
+      "☉": "Gold",
+      "☿": "Quicksilver",
+      "☽": "Silver",
+      "♂": "Iron",
+    };
+
+    let answer = "";
+
+    for (let symbol of symbols) {
+      answer += map[symbol];
+    }
+
+    return answer;
+  }
 }
 
 async function main() {
