@@ -53,6 +53,8 @@ async function submitAnswer(answer) {
   const data = await response.json();
 
   console.log("Submit result:", data);
+
+  return data;
 }
 
 function solveChallenge(prompt) {
@@ -68,15 +70,29 @@ function solveChallenge(prompt) {
 async function main() {
   await startGame();
 
-  const challenge = await getStatus();
+  let gameOver = false;
 
-  console.log("Challenge:", challenge.prompt);
+  while (!gameOver) {
+    const challenge = await getStatus();
 
-  const answer = solveChallenge(challenge.prompt);
+    console.log("Challenge:", challenge.prompt);
 
-  console.log("Answer:", answer);
+    const answer = solveChallenge(challenge.prompt);
 
-  await submitAnswer(answer);
+    console.log("Answer:", answer);
+
+    const result = await submitAnswer(answer);
+
+    if (result.correct === false) {
+      console.log("Wrong answer, stopping.");
+      gameOver = true;
+    }
+
+    if (!result.next) {
+      console.log("Game finished!");
+      gameOver = true;
+    }
+  }
 }
 
 main();
