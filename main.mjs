@@ -50,6 +50,22 @@ async function submitAnswer(answer) {
     }),
   });
 
+async function getClue() {
+  const response = await fetch(`${BASE_URL}/clue`, {
+    method: "GET",
+    headers: {
+      Authorization: token,
+      Accept: "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  console.log("Clue:", data.clue);
+
+  return data.clue;
+}
+
   const data = await response.json();
 
   console.log("Submit result:", data);
@@ -64,6 +80,25 @@ function solveChallenge(prompt) {
 
   if (prompt.includes("3.14159")) {
     return "pi";
+  }
+
+  if (prompt.includes("☉")) {
+    const symbols = "☉☿☽♂☉";
+
+    const map = {
+      "☉": "S",
+      "☿": "M",
+      "☽": "M",
+      "♂": "M",
+    };
+
+    let answer = "";
+
+    for (let symbol of symbols) {
+      answer += map[symbol];
+    }
+
+    return answer;
   }
 }
 
