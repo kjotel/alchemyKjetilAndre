@@ -17,7 +17,6 @@ async function startGame() {
   });
 
   const data = await response.json();
-
   token = data.token;
 
   console.log("Token:", token);
@@ -32,9 +31,7 @@ async function getStatus() {
     },
   });
 
-  const data = await response.json();
-
-  return data;
+  return await response.json();
 }
 
 async function submitAnswer(answer) {
@@ -51,7 +48,6 @@ async function submitAnswer(answer) {
   });
 
   const data = await response.json();
-
   console.log("Submit result:", data);
 
   return data;
@@ -67,11 +63,12 @@ async function getClue() {
   });
 
   const data = await response.json();
-
   console.log("Clue:", data.clue);
 
   return data.clue;
 }
+
+// Challenge Solver
 
 function solveChallenge(prompt) {
   // Challenge 1
@@ -97,8 +94,8 @@ function solveChallenge(prompt) {
 
     let answer = "";
 
-    for (let symbol of symbols) {
-      answer += map[symbol];
+    for (let s of symbols) {
+      answer += map[s];
     }
 
     return answer;
@@ -110,13 +107,15 @@ function solveChallenge(prompt) {
 
     let answer = "";
 
-    for (let word of poemWords) {
-      answer += word[0];
+    for (let w of poemWords) {
+      answer += w[0];
     }
 
     return answer;
   }
 }
+
+// Main Loop
 
 async function main() {
   await startGame();
